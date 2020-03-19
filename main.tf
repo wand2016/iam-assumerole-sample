@@ -27,7 +27,7 @@ data "aws_iam_policy_document" "example" {
     ]
 
     resources = [
-      "${aws_s3_bucket.example.arn}/home/&{aws:username}/*",
+      "${aws_s3_bucket.example.arn}/*",
     ]
   }
 
