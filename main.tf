@@ -22,13 +22,21 @@ module "role_s3_putobject_for_ec2" {
 
 data "aws_iam_policy_document" "example" {
   statement {
-
     actions = [
       "s3:PutObject"
     ]
 
     resources = [
-      "${aws_s3_bucket.example.arn}/home/&{aws:username}",
+      "${aws_s3_bucket.example.arn}/home/&{aws:username}/*",
+    ]
+  }
+
+  statement {
+    actions = [
+      "sts:*"
+    ]
+    resources = [
+      "*",
     ]
   }
 }
@@ -46,4 +54,8 @@ resource "aws_s3_bucket" "example" {
 
 output "example_s3_bucket_arn" {
   value = aws_s3_bucket.example.arn
+}
+
+output "eample_iam_role_arn" {
+  value = module.role_s3_putobject_for_ec2.iam_role_arn
 }
